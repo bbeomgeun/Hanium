@@ -1,0 +1,2 @@
+rootProject.name='hanium_login_trail2'
+include ':app'

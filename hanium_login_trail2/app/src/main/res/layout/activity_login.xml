@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--
+      ~ Developed by Keivan Kiyanfar on 10/9/18 11:38 PM
+      ~ Last modified 10/9/18 11:38 PM
+      ~ Copyright (c) 2018. All rights reserved.
+      -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="@string/Username"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:textAlignment="viewStart"
+       />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="@string/Password"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:textAlignment="viewStart"
+        />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="164dp"
+        android:text="@string/Login"
+        android:textAlignment="center"
+       />
+
+    <com.shaishavgandhi.loginbuttons.GoogleButton
+        android:id="@+id/btnGoogle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="450dp"
+        android:layout_marginEnd="8dp"
+        app:iconSize="30dp"
+        app:roundedCorner="true"
+        app:roundedCornerRadius="75dp" />
+
+    <com.shaishavgandhi.loginbuttons.FacebookButton
+        android:id="@+id/btnFacebook"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="450dp"
+        android:layout_marginLeft="200dp"
+
+        app:iconSize="30dp"
+        app:roundedCorner="true"
+        app:roundedCornerRadius="75dp" />
+
+    <TextView
+        android:id="@+id/txtNotAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="360dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/NotAccount"
+        />
+
+    <TextView
+        android:id="@+id/txtForgetPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/ForgetPass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toEndOf="@+id/txtNotAccount"
+        app:layout_constraintTop_toBottomOf="@+id/btnFacebook" />
+
+</RelativeLayout>
