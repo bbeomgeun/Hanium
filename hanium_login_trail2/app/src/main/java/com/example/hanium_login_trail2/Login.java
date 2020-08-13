@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity {
 
         txtNotAccount.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { // 회원가입창으로 intent
                 startActivity(new Intent(Login.this, Signup.class));
             }
         });

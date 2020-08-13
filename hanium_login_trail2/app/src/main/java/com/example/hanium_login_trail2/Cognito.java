@@ -1,6 +1,7 @@
 package com.example.hanium_login_trail2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,6 +20,8 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHa
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.cognitoidentityprovider.model.SignUpResult;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class Cognito {
     private static final String TAG = "Cognito";
@@ -48,11 +51,14 @@ public class Cognito {
 
 
         @Override
+        //This method is called successfully registering a new user. Confirming the user may be required to activate the users account.
         public void onSuccess(CognitoUser user, SignUpResult signUpResult) {
-
+            Toast.makeText(appContext,"Sign-up Success", Toast.LENGTH_LONG).show();
+            Log.d(TAG, "Sign-up failed: " + signUpResult);
         }
 
         @Override
+        //This method is called when user registration has failed. Probe exception for cause of the failure.
         public void onFailure(Exception exception) {
             Toast.makeText(appContext,"Sign-up failed", Toast.LENGTH_LONG).show();
             Log.d(TAG, "Sign-up failed: " + exception);
@@ -71,13 +77,14 @@ public class Cognito {
         public void onSuccess() {
             // User was successfully confirmed
             Toast.makeText(appContext,"User Confirmed", Toast.LENGTH_LONG).show();
-
+            Log.i(TAG, "User Confirmation success");
         }
 
         @Override
         public void onFailure(Exception exception) {
             // User confirmation failed. Check exception for the cause.
-
+            Toast.makeText(appContext,"User Confirmation failed", Toast.LENGTH_LONG).show();
+            Log.d(TAG, "Confirmation failed: " + exception);
         }
     };
 
@@ -98,12 +105,18 @@ public class Cognito {
         }
 
         @Override
+        //This method is called to deliver valid tokens, when valid tokens were locally available (cached) or after successful completion of the authentication process.
+        // The newDevice will is an instance of CognitoDevice for this device, and this parameter will be not null during these cases:
+        // 1- If the user pool allows devices to be remembered and this is is a new device, that is first time authentication on this device.
+        // 2- When the cached device key is lost and, hence, the service identifies this as a new device.
         public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
-            Toast.makeText(appContext,"Sign in success", Toast.LENGTH_LONG).show();
-
+            Toast.makeText(appContext,"Authentication success", Toast.LENGTH_LONG).show();
+            Log.d(TAG, "Authentication success"); // 인증완료
+            appContext.startActivity(new Intent(appContext, MainActivity.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
         }
 
         @Override
+        //Call out to the dev to get the credentials for a user.
         public void getAuthenticationDetails(AuthenticationContinuation authenticationContinuation, String userId) {
             // The API needs user sign-in credentials to continue
             AuthenticationDetails authenticationDetails = new AuthenticationDetails(userId, userPassword, null);
@@ -124,7 +137,8 @@ public class Cognito {
         @Override
         public void onFailure(Exception exception) {
             // Sign-in failed, check exception for the cause
-            Toast.makeText(appContext,"Sign in Failure", Toast.LENGTH_LONG).show();
+            Toast.makeText(appContext,"Authentication Failure", Toast.LENGTH_LONG).show();
+            Log.d(TAG, "Authentication Failure");
         }
     };
 
