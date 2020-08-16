@@ -1,5 +1,6 @@
 package com.example.hanium_login_trail2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -35,6 +36,8 @@ public class Cognito {
     private Context appContext;
 
     private String userPassword;                        // Used for Login
+
+    Login loginActivity = (Login)Login.LoginActivity; // Login에서 전역변수로 선언 후 그 내용을 담은 객체 생성.
 
     public Cognito(Context context){
         appContext = context;
@@ -112,7 +115,12 @@ public class Cognito {
         public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
             Toast.makeText(appContext,"Authentication success", Toast.LENGTH_LONG).show();
             Log.d(TAG, "Authentication success"); // 인증완료
-            appContext.startActivity(new Intent(appContext, MainActivity.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
+
+            Intent i = new Intent(appContext, MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_NEW_TASK);
+            appContext.startActivity(i);
+            loginActivity.finish();
+            //finish안해주면 activity가 쌓인다. 뒤로가기 시 로그인액티비티가 살아있음.
         }
 
         @Override

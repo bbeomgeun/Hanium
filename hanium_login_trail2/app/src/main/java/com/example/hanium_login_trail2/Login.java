@@ -2,12 +2,21 @@ package com.example.hanium_login_trail2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Login extends AppCompatActivity {
     // ############################################################# View Components
@@ -16,6 +25,7 @@ public class Login extends AppCompatActivity {
     Button btnLogin;            // Button for Login
     EditText etUsername;
     EditText etPassword;
+    public static Activity LoginActivity; // static
     // ############################################################# End View Components
 
     @Override
@@ -24,6 +34,20 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setTitle("Login");
         initViewComponents();
+        LoginActivity = Login.this; // static variable initialize
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature: info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initViewComponents(){
@@ -37,6 +61,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) { // 회원가입창으로 intent
                 startActivity(new Intent(Login.this, Signup.class));
+                finish();
             }
         });
 

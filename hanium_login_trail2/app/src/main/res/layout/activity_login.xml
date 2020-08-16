@@ -10,57 +10,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    tools:context=".Login"
+    >
 
-    <EditText
-        android:id="@+id/etUsername"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:hint="@string/Username"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:textAlignment="viewStart"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        android:id="@+id/LinearLayout_id">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 아이디 : ">
+        </TextView>
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Username"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:textAlignment="viewStart"
        />
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/etPassword"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:hint="@string/Password"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        android:textAlignment="viewStart"
-        />
+        android:orientation="horizontal"
+        android:layout_below="@+id/LinearLayout_id"
+        android:id="@+id/LinearLayout_pw"
+        android:layout_centerInParent="true"
+        android:layout_margin="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 : ">
+        </TextView>
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Password"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:textAlignment="viewStart"
+            />
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="164dp"
-        android:text="@string/Login"
-        android:textAlignment="center"
-       />
+        android:id="@+id/LinearLayout_bt"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/LinearLayout_pw"
+        android:orientation="horizontal"
+
+
+        >
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그인"
+            android:textAlignment="center"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/LinearLayout_pw"
+            android:layout_weight="1"
+           />
+        <Button
+            android:id="@+id/txtForgetPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디/비밀번호 찾기"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.951"
+         />
+
+
+        <Button
+            android:id="@+id/txtNotAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원가입"
+            android:layout_weight="1"
+            />
+
+
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_below="@+id/LinearLayout_bt"
+    android:layout_margin="50dp">
 
     <com.shaishavgandhi.loginbuttons.GoogleButton
         android:id="@+id/btnGoogle"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="450dp"
-        android:layout_marginEnd="8dp"
         app:iconSize="30dp"
         app:roundedCorner="true"
         app:roundedCornerRadius="75dp" />
@@ -69,34 +122,10 @@
         android:id="@+id/btnFacebook"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="450dp"
-        android:layout_marginLeft="200dp"
 
         app:iconSize="30dp"
         app:roundedCorner="true"
         app:roundedCornerRadius="75dp" />
-
-    <TextView
-        android:id="@+id/txtNotAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="360dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/NotAccount"
-        />
-
-    <TextView
-        android:id="@+id/txtForgetPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="400dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/ForgetPass"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
-        app:layout_constraintStart_toEndOf="@+id/txtNotAccount"
-        app:layout_constraintTop_toBottomOf="@+id/btnFacebook" />
+</LinearLayout>
 
 </RelativeLayout>
