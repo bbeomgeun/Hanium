@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@android:drawable/ic_menu_info_details">
+        </ImageView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/image"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="name"
+            ></TextView>
+        <TextView
+            android:id="@+id/text_address"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="address"
+            ></TextView>
+        </LinearLayout>
+    </RelativeLayout>
