@@ -17,6 +17,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private ArrayList<String> mName = null;
     private ArrayList<String> mAddress = null;
 
+    public interface OnItemClickListener{
+        void onItemClick(View v, int position);
+    }
+    private OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener = listener;
+    } // 외부에서 리스너 객체를 받아서 어댑터의 mListener에 전달
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,6 +59,18 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION){
+                        if(mListener != null) {
+                            mListener.onItemClick(v, pos); // recyclerView에 각 아이템 클릭이벤트
+                        }
+                    }
+                }
+            });
             imageView = itemView.findViewById(R.id.image);
             text_name = itemView.findViewById(R.id.text_name);
             text_address = itemView.findViewById(R.id.text_address);
