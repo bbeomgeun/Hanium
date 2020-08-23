@@ -23,3 +23,18 @@
   - 어플 파트 팀원과 함께 전반적인 어플리케이션 개발<br>
   - 데이터 송수신을 위해 DynamoDB + AppSync 이용, 앱과 연동<br>
   - Cognito를 통해 로그인/회원가입/사용자 관리<br>
+
+---
+
+ <h3> gradle파일이란 무엇인가? </h3>
+ 
+ - AWS App Sync를 Android studio project에 연결하던 중, version이 맞지 않아 gradle sync 오류가 났고, 이런 오류가 날때마다 단순 검색을 통해 해결하는 것보단 직접 이해해서 고치는 편이 도움이 되겠다고 생각해서 공부를 해보았다.
+ 
+ <h4> Gradle이란? </h4>
+ 
+  - Gradle이란 빌드(소스코드와 의존성 라이브러리를 엮어서 컴파일하여 패키징하는 것) 배포 도구이다.
+  - 프로젝트를 만들게 되면 Gradle이란 것도 같이 생성되는 것을 볼 수 있다.
+  - Android Studio(IDE)와 빌드 시스템은 서로 독립적이기 때문. (코드의 편집 담당 <-> 빌드 담당)
+  - 따라서 Android Studio project 설정과 Gradle Build 설정이 동기화되지 않아 에러가 나타날 수 있다.
+  
+  참고 : https://developer.android.com/studio/build?hl=ko
