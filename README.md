@@ -25,6 +25,56 @@
   - Cognito를 통해 로그인/회원가입/사용자 관리<br>
 
 ---
+ <h3> AWS 흐름 </h3>
+ 
+ <img src="https://cdn-ssl-devio-img.classmethod.jp/wp-content/uploads/2020/06/appsync-api-768x308.png">
+ 
+ 출처 : https://dev.classmethod.jp/articles/amplify-android-graphql-api/
+ 
+ - 모바일 앱을 사용할 시 AWS Amplify를 거쳐, GraphQL을 사용해 AWS AppSync가 데이터와 관련된 작업을 수행
+ - AppSync에서 생성된 API가 DynamoDB 데이터베이스에 맞춰 테이블을 생성해주고, 읽어들일 수 있도록 도와준다. 
+ 
+ <h2> AWS Amplify란? </h2>
+ 
+  - AWS Amplify는 안전하고 확장 가능한 모바일 및 웹 애플리케이션을 구축하기 위한 개발 플랫폼이다.
+  - 즉, Amplify를 이용하면 앱 개발 시에 필수적인 백엔드 구현, 배포, 테스트와 같은 단계를 손쉽게 할 수 있도록 도와주는 역할을 한다.
+
+<img src="https://cdn-ssl-devio-img.classmethod.jp/wp-content/uploads/2020/05/amplify-using-service-640x386.png">
+
+ - Amplify 와 통합되어 사용하는 서비스들
+ 
+ 1. AWS AppSync : GraphQL을 이용하여 애플리케이션에서 필요로 하는 데이터를 가져올 수 있도록 하는 관리형 서비스. 오프라인 상태이더라도 로컬로 데이터 액세스가 가능하도록 하고, 온라인 상태가 되면 데이터를 다시 동기화해줄 수 있는 기능을 갖추고 있다.
+ 
+ 2. Amazone Cognito : 가입, 로그인, 액세스 제어 기능을 갖춘 인증 관리 서비스. Identity Pool을 통해 Facebook, Google, Amazone과 같은 소셜 로그인과도 연동이 가능하다.
+ 
+---
+<h3> API란? </h3>
+
+<img src = "http://blog.wishket.com/wp-content/uploads/2019/10/API-%EC%89%BD%EA%B2%8C-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0.png">
+
+출처 : http://blog.wishket.com/api%EB%9E%80-%EC%89%BD%EA%B2%8C-%EC%84%A4%EB%AA%85-%EA%B7%B8%EB%A6%B0%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8/
+
+- API는 점원과 같은 역할을 한다.
+- 즉, 프로그램이 명령할 수 있게 명령 목록을 정리하고, 명령을 받으면 응용프로그램과 상호작용하며 명령에 대한 결과값을 전달해준다.
+- API는 프로그램들이 서로 상호작용하는 것을 도와주는 매개체라고 볼 수 있다.
+
+<h4> API의 역할 </h4>
+
+ 1. API는 서버와 데이터베이스에 대한 출입구 역할을 한다.
+  - 모든 사람들이 데이터베이스에 접근하는 것을 방지. 허용된 사람들에게만 접근성을 부여한다.
+  
+ 2. API는 애플리케이션과 기기가 원활하게 통신할 수 있도록 한다.
+  - 스마트폰 어플이나 프로그램이 기기와 데이터를 원활하게 주고받을 수 있도록 도와주는 역할
+  
+ 3. API는 모든 접속을 표준화한다.
+  - API는 모든 접속을 표준화하기 때문에 기계/운영체제 등과 상관없이 동일한 액세스를 얻을 수 있다.
+
+---
+
+<h3> What is GraphQL? </h3>
+ - graphQL은 API를 위한 쿼리문이다.
+
+---
 
  <h3> gradle파일이란 무엇인가? </h3>
  
