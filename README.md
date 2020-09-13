@@ -22,6 +22,7 @@
  
   - 어플 파트 팀원과 함께 전반적인 어플리케이션 개발<br>
   - 데이터 송수신을 위해 DynamoDB + AppSync 이용, 앱과 연동<br>
+  - 기존의 DynamoDB테이블을 사용하기 위해 DynamoDBMapper을 사용해서 데이터를 가져올 예정.
   - Cognito를 통해 로그인/회원가입/사용자 관리<br>
 
 ---
