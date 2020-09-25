@@ -22,7 +22,6 @@
  
   - 어플 파트 팀원과 함께 전반적인 어플리케이션 개발<br>
   - 데이터 송수신을 위해 DynamoDB + AppSync 이용, 앱과 연동<br>
-  - 기존의 DynamoDB테이블을 사용하기 위해 DynamoDBMapper을 사용해서 데이터를 가져올 예정.
   - Cognito를 통해 로그인/회원가입/사용자 관리<br>
 
 ---
@@ -48,6 +47,15 @@
  
  2. Amazone Cognito : 가입, 로그인, 액세스 제어 기능을 갖춘 인증 관리 서비스. Identity Pool을 통해 Facebook, Google, Amazone과 같은 소셜 로그인과도 연동이 가능하다.
  
+---
+
+ - Amplify를 통해 기존 Dynamodb Table과 연결하는 법.
+ 
+ 1. AWS App Sync를 통해 기존 DB Table과 연동하여 console에서 API를 생성한다.
+ 2. 프로젝트에서 Amplify init을 해줘서 Amplify를 추가해준다.
+ 3. Amplify amplify add codegen --apiID(appsync API)를 통해 프로젝트에 API의 graphql을 생성한다.
+ 4. 이후에 gradle 파일을 추가해주고, 앱을 실행시키면 auto generated로 데이터베이스에 접근할 수 있는 쿼리 클래스가 생성된다.
+
 ---
 <h3> API란? </h3>
 
