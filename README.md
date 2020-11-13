@@ -97,3 +97,19 @@
   - 따라서 Android Studio project 설정과 Gradle Build 설정이 동기화되지 않아 에러가 나타날 수 있다.
   
   참고 : https://developer.android.com/studio/build?hl=ko
+  
+  <h3> Android NDK란? </h3>
+  
+  - 카카오맵을 사용시 관련 파일을 JNI에 압축을 풀었고, build할때 NDK version을 맞춰줘야하는 경우가 있었다.
+  - NDK가 무엇인지 궁금해졌고, 이에 관해 간단하게 공부를 했다.
+  
+  <h4> NDK란? </h4>
+  
+  - 공식 developer 문서에서의 NDK (Native Development Kit)
+ 
+  ~~~
+  The Android NDK is a toolset that lets you implement parts of your app using native-code languages such as C and C++. For certain types of apps, this can help you reuse code libraries written in those languages.
+  ~~~
+   - 
+   - java코드만 사용해서 필요한 기능과 성능을 모두 만족시키기는 힘들다. 따라서 C나 C++ 언어로 작성된 프로그램을 java에서 사용할 수 있도록 JDK에서 제공하는 것이 JNI(Java Native Interface)이다.
+   - JNI를 통해 java코드와 NDK를 연결시켜준다.
