@@ -26,9 +26,9 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class Cognito {
     private static final String TAG = "Cognito";
-    private String poolID = "ap-northeast-2_pKRNnDU7H";
-    private String clientID = "26gh7kml1vht19dfio5t2ksgs6";
-    private String clientSecret = "12sn4fik81kiulep6uhu8bopqnktbjpi9puejtccsn351r26dn3r";
+    private String poolID = "ap-northeast-2_XrucmlaJK";
+    private String clientID = "1qe319ebpnshj3lhpb59rkh9tl";
+    private String clientSecret = "1tkl3h8ea00oj3h6l55tu91lqa8q562squh8ngtfcpv7v2dqlg3";
     private Regions awsRegion = Regions.AP_NORTHEAST_2;         // Place your Region
     // ############################################################# End of Information about Cognito Pool
     private CognitoUserPool userPool;
