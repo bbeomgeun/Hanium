@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import net.daum.android.map.coord.MapCoordLatLng;
 import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
@@ -41,10 +43,8 @@ public class fragment_main extends Fragment implements LocationListener {
     ArrayList<Double> Latitudes;
     ArrayList<Double> Longitudes;
     ///
-    LocationManager lm;
-    MyReceiver receiver;
-    PendingIntent pintent;
-    Intent intent;
+    ArrayList<MapCoordLatLng> LatLngs;
+    ///
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
@@ -54,11 +54,6 @@ public class fragment_main extends Fragment implements LocationListener {
         //// db연동해서 위치 받아오기 + 카카오 전용 지오코더 이용하기.
 
         // 근접 경보 코드
-        lm = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
-        // manifest에 등록하지않고 코드상으로 브로드캐스트 리시버 등록작업.
-        myPermissionCheck();
-        receiverMaker();
-        //
 
         Namelist = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
@@ -75,7 +70,8 @@ public class fragment_main extends Fragment implements LocationListener {
         Longitudes = new ArrayList<>();
         Longitudes.add(126.65888);
         Longitudes.add(126.46);
-        // 테스트 lm등록
+
+        final MapCoordLatLng target_latlng = new MapCoordLatLng(37.4500221, 126.65888);
 
         RecyclerView recyclerView = view.findViewById(R.id.RecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -89,6 +85,8 @@ public class fragment_main extends Fragment implements LocationListener {
             public void onItemClick(View v, int position) {
                 Drawmarker(mapView, Latitudes.get(position), Longitudes.get(position), Namelist.get(position));
                 DrawBoundary(mapView, Latitudes.get(position), Longitudes.get(position), 200); // 현재 임시로 인하대학교 근처 200m로
+                MapCoordLatLng latlng = new MapCoordLatLng(Latitudes.get(position), Longitudes.get(position) );
+                inOutCheck(target_latlng, latlng, 200);
             }
         });
         return view;
@@ -123,58 +121,6 @@ public class fragment_main extends Fragment implements LocationListener {
         //locationManager 연결해주는 코드
     }
 
-    public void receiverMaker() {
-
-        //리시버 등록 코드
-        receiver = new MyReceiver();
-        IntentFilter filter = new IntentFilter("beomGeun");
-        getActivity().registerReceiver(receiver, filter);
-
-// 인텐트의 액션 정보 정의 - 목표지점을 등록할 때 사용하는 인텐트를 브로드캐스트 수신자에서
-// 받아 처리할 수 있어야 하므로 전송될 인텐트와 수신을 위한 인텐트 필터에 동일한 액션 정보(키값)-beomgeun 를 정의함
-        intent = new Intent("beomGeun");
-        try {
-                pintent = PendingIntent.getBroadcast(getActivity(),
-                        0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                lm.addProximityAlert(37.4500221,126.65888
-                        , 100, 10000, pintent);
-            //2) 인텐트와 펜딩인텐트를 이용한 목표지점 추가 - 인텐트를 생성하고 목표지점의 위도, 경도와 같은 정보를
-// 추가하면 이를 이용해 브로드캐스팅을 위한 펜딩인텐트로 만들 수 있다.
-// addProximityAlert()메소드를 이용해 목표지점을 추가할 때 좌표값과 펜딩 인텐트를 파라미터로전달
-
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void myPermissionCheck() {
-        //런타임 퍼미션 체크
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // 퍼미션에 대한 설명을 해줘야하니? - 네
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                //다이어로그를 사용하여 설명해주기
-            } else {
-                //퍼미션에 대한 설명 필요없으면, 바로 권한 부여
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-            }
-        } else {
-            //허용되었을 때
-            try {
-                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, (LocationListener) lm);
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     @Override
     public void onLocationChanged(Location location) {
     }
@@ -189,5 +135,29 @@ public class fragment_main extends Fragment implements LocationListener {
 
     @Override
     public void onProviderDisabled(String provider) {
+    }
+
+    private double calculateDistance(MapCoordLatLng target, MapCoordLatLng weakPosition){
+        double R = 6371e3; // metres
+        double φ1 = Math.PI * target.getLatitude() / 180;
+        double φ2 = Math.PI * weakPosition.getLatitude() / 180;
+        double Δφ = φ2 - φ1;
+        double Δλ = Math.PI * (target.getLongitude() - weakPosition.getLongitude()) / 180;
+        double a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        double d = R * c;
+        return d;
+    }
+
+    public void inOutCheck(MapCoordLatLng target, MapCoordLatLng weakPosition, double radius){
+        if(radius < calculateDistance(target, weakPosition)){
+            Toast toast = Toast.makeText(getActivity(), "나갔어요", Toast.LENGTH_LONG);
+            toast.show();
+        }
+        else{
+            Toast toast = Toast.makeText(getActivity(), "안에 있어요", Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 }
