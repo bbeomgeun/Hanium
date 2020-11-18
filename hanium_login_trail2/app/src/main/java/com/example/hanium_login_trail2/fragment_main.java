@@ -33,8 +33,7 @@ import net.daum.mf.map.api.MapView;
 
 import java.util.ArrayList;
 
-public class fragment_main extends Fragment implements LocationListener {
-    final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+public class fragment_main extends Fragment{
 
     ArrayList<String> Namelist;
     ArrayList<String> AddressList;
@@ -71,7 +70,7 @@ public class fragment_main extends Fragment implements LocationListener {
         Longitudes.add(126.65888);
         Longitudes.add(126.46);
 
-        final MapCoordLatLng target_latlng = new MapCoordLatLng(37.4500221, 126.65888);
+        final MapCoordLatLng target_latlng = new MapCoordLatLng(37.4500221, 126.65888); // 임시 고정위치 (인하대학교)
 
         RecyclerView recyclerView = view.findViewById(R.id.RecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -85,8 +84,8 @@ public class fragment_main extends Fragment implements LocationListener {
             public void onItemClick(View v, int position) {
                 Drawmarker(mapView, Latitudes.get(position), Longitudes.get(position), Namelist.get(position));
                 DrawBoundary(mapView, Latitudes.get(position), Longitudes.get(position), 200); // 현재 임시로 인하대학교 근처 200m로
-                MapCoordLatLng latlng = new MapCoordLatLng(Latitudes.get(position), Longitudes.get(position) );
-                inOutCheck(target_latlng, latlng, 200);
+                MapCoordLatLng latlng = new MapCoordLatLng(Latitudes.get(position), Longitudes.get(position)); // 클릭한 환자의 위치
+                inOutCheck(target_latlng, latlng, 200); // 거리 계산 후 결과 return
             }
         });
         return view;
@@ -119,22 +118,6 @@ public class fragment_main extends Fragment implements LocationListener {
         circle.setTag(1);
         mapview.addCircle(circle);
         //locationManager 연결해주는 코드
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
     }
 
     private double calculateDistance(MapCoordLatLng target, MapCoordLatLng weakPosition){
