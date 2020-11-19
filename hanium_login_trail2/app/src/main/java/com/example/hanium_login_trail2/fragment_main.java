@@ -1,7 +1,11 @@
 package com.example.hanium_login_trail2;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -9,6 +13,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +25,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -105,8 +111,7 @@ public class fragment_main extends Fragment{
     }
 
     public void DrawBoundary(MapView mapview, Double latitude, Double longitude, int radius) {
-        // 약자 주거지 근처로 원 그려주는 함수 & lm에 접근경보도 걸어준다
-        // 테스트로 함수로 묶어놨지만 나중에는 locationManager에 등록해주는 것은 바깥에서 해줘야 할 것
+        // 약자 주거지 근처로 원 그려주는 함수
         // 지금은 itemClick시 원 그려지고 경보 등록인데 경보는 항상 등록되어있어야 굳이 확인하지 않아도 24시간 알람이 울린다.
 
         MapCircle circle = new MapCircle(
@@ -117,9 +122,10 @@ public class fragment_main extends Fragment{
         );
         circle.setTag(1);
         mapview.addCircle(circle);
-        //locationManager 연결해주는 코드
     }
 
+
+    //TODO : 거리계산 함수랑 inoutCheck 함수 쓰레드로 옮기기. or 클래스로 따로 만들기 + 데이터를 어떻게 쓰레드로 가져올지 생각하기.
     private double calculateDistance(MapCoordLatLng target, MapCoordLatLng weakPosition){
         double R = 6371e3; // metres
         double φ1 = Math.PI * target.getLatitude() / 180;
@@ -137,6 +143,7 @@ public class fragment_main extends Fragment{
         if(radius < calculateDistance(target, weakPosition)){
             Toast toast = Toast.makeText(getActivity(), "나갔어요", Toast.LENGTH_LONG);
             toast.show();
+
         }
         else{
             Toast toast = Toast.makeText(getActivity(), "안에 있어요", Toast.LENGTH_LONG);
