@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -61,20 +62,24 @@ public class fragment_main extends Fragment{
         // 근접 경보 코드
 
         Namelist = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            Namelist.add(String.format("Name %d", i));
-        }
+//        for (int i = 0; i < 2; i++) {
+//            Namelist.add(String.format("Name %d", i));
+//        }
+        Namelist.add("임송일");
+        Namelist.add("박범근");
         AddressList = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            AddressList.add(String.format("Address %d", i));
-        }
+//        for (int i = 0; i < 2; i++) {
+//            AddressList.add(String.format("Address %d", i));
+//        }
+        AddressList.add(("인천광역시 용현 1.4동 177-21"));
+        AddressList.add(("인천광역시 인하로 47번길 87"));
         ///테스트용
         Latitudes = new ArrayList<>();
-        Latitudes.add(37.4500221);
-        Latitudes.add(37.89);
+        Latitudes.add(37.45315);
+        Latitudes.add(37.45831);
         Longitudes = new ArrayList<>();
-        Longitudes.add(126.65888);
-        Longitudes.add(126.46);
+        Longitudes.add(126.66043);
+        Longitudes.add(126.65432);
 
         final MapCoordLatLng target_latlng = new MapCoordLatLng(37.4500221, 126.65888); // 임시 고정위치 (인하대학교)
 
@@ -89,9 +94,9 @@ public class fragment_main extends Fragment{
             @Override
             public void onItemClick(View v, int position) {
                 Drawmarker(mapView, Latitudes.get(position), Longitudes.get(position), Namelist.get(position));
-                DrawBoundary(mapView, Latitudes.get(position), Longitudes.get(position), 200); // 현재 임시로 인하대학교 근처 200m로
+                DrawBoundary(mapView, target_latlng.getLatitude(), target_latlng.getLongitude(), 1000); // 현재 임시로 인하대학교 근처 200m로
                 MapCoordLatLng latlng = new MapCoordLatLng(Latitudes.get(position), Longitudes.get(position)); // 클릭한 환자의 위치
-                inOutCheck(target_latlng, latlng, 200); // 거리 계산 후 결과 return
+                inOutCheck(target_latlng, latlng, 1000); // 거리 계산 후 결과 return
             }
         });
         return view;
@@ -143,11 +148,50 @@ public class fragment_main extends Fragment{
         if(radius < calculateDistance(target, weakPosition)){
             Toast toast = Toast.makeText(getActivity(), "나갔어요", Toast.LENGTH_LONG);
             toast.show();
+            NotificationManager notificationManager=(NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder builder =  null;
+            if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
+                String channelID = "channel_01";
+                String channelName = "MyChannel01";
 
+                NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+                notificationManager.createNotificationChannel(channel);
+                builder = new NotificationCompat.Builder(getActivity(), channelID);
+            } else{
+                builder = new NotificationCompat.Builder(getActivity(), null);
+            }
+
+            builder.setSmallIcon(R.drawable.round_border);
+            builder.setContentTitle("약자 위치 알람");
+            builder.setContentText("지정하신 거주지를 이탈 하였습니다. 눌러서 확인");
+            builder.setAutoCancel(true);
+            Notification notification = builder.build();
+
+            notificationManager.notify(1, notification);
         }
         else{
             Toast toast = Toast.makeText(getActivity(), "안에 있어요", Toast.LENGTH_LONG);
             toast.show();
+            NotificationManager notificationManager=(NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder builder =  null;
+            if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
+                String channelID = "channel_01";
+                String channelName = "MyChannel01";
+
+                NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+                notificationManager.createNotificationChannel(channel);
+                builder = new NotificationCompat.Builder(getActivity(), channelID);
+            } else{
+                builder = new NotificationCompat.Builder(getActivity(), null);
+            }
+
+            builder.setSmallIcon(R.drawable.round_border);
+            builder.setContentTitle("약자 위치 알람");
+            builder.setContentText("지정하신 거주지안에 들어왔습니다. 눌러서 확인");
+            builder.setAutoCancel(true);
+            Notification notification = builder.build();
+
+            notificationManager.notify(1, notification);
         }
     }
 }
