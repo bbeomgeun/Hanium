@@ -11,7 +11,7 @@
 
 | 구성 | 역할 | 사용 언어 & 툴 |
 |:------------:|:-----------------:|:-----------------:|
-| Web | 관리자용 페이지 | jsp - eclipse |
+| Web | 관리자용 페이지 | html, css, javascript, java - eclipse |
 | App | 사용자 위치확인 & 관리 | java - android studio |
 | 백엔드 | 데이터베이스를 통한 정보 갱신, 웹과 앱 연결, cognito를<br> 이용한 사용자서비스인증 | aws DynamoDB + aws AppSync + awsCognito ->graphQL을 통해 앱에서 데이터 수신 |
 | 아두이노 | GPS 정보 송신 | 아두이노 + LORA모듈을 이용한 원거리 송신 |
